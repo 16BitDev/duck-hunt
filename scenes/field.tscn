@@ -1,0 +1,88 @@
+[gd_scene load_steps=9 format=3 uid="uid://bse14koxq0x7w"]
+
+[ext_resource type="Script" path="res://scenes/field.gd" id="1_ey6xf"]
+[ext_resource type="PackedScene" uid="uid://budva5pgl7ig1" path="res://scenes/bird.tscn" id="1_xord0"]
+[ext_resource type="Texture2D" uid="uid://bykgxdyfko54k" path="res://assets/3DS - WarioWare Gold - Duck Hunt.png" id="2_1c8dc"]
+[ext_resource type="PackedScene" uid="uid://cie64y2fxv2u4" path="res://scenes/dog.tscn" id="4_i0ouc"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_oxqfv"]
+size = Vector2(320, 18)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_x4v3n"]
+size = Vector2(320, 20)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_0t77o"]
+size = Vector2(20, 120)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_40jgk"]
+size = Vector2(20, 119)
+
+[node name="field" type="Node2D"]
+script = ExtResource("1_ey6xf")
+bird_node = ExtResource("1_xord0")
+
+[node name="Walls" type="StaticBody2D" parent="."]
+
+[node name="top" type="CollisionShape2D" parent="Walls"]
+position = Vector2(160, -9)
+shape = SubResource("RectangleShape2D_oxqfv")
+
+[node name="bottom" type="CollisionShape2D" parent="Walls"]
+position = Vector2(160, 128)
+shape = SubResource("RectangleShape2D_x4v3n")
+
+[node name="left" type="CollisionShape2D" parent="Walls"]
+position = Vector2(-11, 58)
+shape = SubResource("RectangleShape2D_0t77o")
+
+[node name="right" type="CollisionShape2D" parent="Walls"]
+position = Vector2(330, 58.5)
+shape = SubResource("RectangleShape2D_40jgk")
+
+[node name="BG" type="Sprite2D" parent="."]
+z_index = -1
+position = Vector2(164, 59)
+scale = Vector2(0.7, 0.874)
+texture = ExtResource("2_1c8dc")
+region_enabled = true
+region_rect = Rect2(0, 16, 512, 136)
+
+[node name="FG" type="Sprite2D" parent="."]
+z_index = 1
+position = Vector2(168, 152)
+scale = Vector2(0.7, 0.7)
+texture = ExtResource("2_1c8dc")
+region_enabled = true
+region_rect = Rect2(0, 152, 520, 96)
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="bullet" type="Label" parent="CanvasLayer"]
+offset_left = 93.0
+offset_top = 162.0
+offset_right = 133.0
+offset_bottom = 185.0
+scale = Vector2(0.576349, 0.576349)
+
+[node name="round" type="Label" parent="CanvasLayer"]
+offset_left = 104.0
+offset_top = 149.0
+offset_right = 144.0
+offset_bottom = 172.0
+scale = Vector2(0.50281, 0.50281)
+
+[node name="score" type="Label" parent="CanvasLayer"]
+offset_left = 217.0
+offset_top = 156.0
+offset_right = 257.0
+offset_bottom = 179.0
+scale = Vector2(0.504681, 0.504681)
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 4.0
+one_shot = true
+
+[node name="dog" parent="." instance=ExtResource("4_i0ouc")]
+position = Vector2(168, 160)
+
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
